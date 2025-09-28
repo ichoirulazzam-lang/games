@@ -2,328 +2,430 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>project pemula</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Katalog</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-
     body {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: #f5f6fa;
+      color: #2c2c2c;
     }
 
-    .card, .tools {
-      background: #101820;
-      border-radius: 18px;
-      padding: 35px 25px;
-      width: 340px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    /* Halaman Awal */
+    .home {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: white;
       text-align: center;
     }
 
-    h2 { color: #00d4ff; margin-bottom: 20px; }
-
-    .form-group { margin-bottom: 18px; text-align: left; }
-
-    .form-group label { font-size: 14px; display: block; margin-bottom: 5px; color: #ccc; }
-
-    .form-group input {
-      width: 100%; padding: 12px; border-radius: 8px;
-      border: none; background: #1e2a38; color: #fff; outline: none;
+    .home h1 {
+      font-size: 42px;
+      margin-bottom: 20px;
     }
 
-    .btn {
-      display: block; width: 100%; padding: 14px;
-      background: #00d4ff; color: #101820;
-      font-weight: bold; border: none; border-radius: 8px;
-      margin-top: 10px; cursor: pointer; transition: 0.3s;
+    .home p {
+      font-size: 18px;
+      margin-bottom: 40px;
     }
 
-    .btn:hover { background: #00b3d9; }
+    .home .btn {
+      margin: 10px;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #fff;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+      transition: 0.3s;
+    }
 
-    .status { margin-top: 15px; color: #7CFC00; font-weight: bold; }
+    .home .btn:hover {
+      background: rgba(0,0,0,0.6);
+    }
 
-    .info { margin-top: 8px; font-size: 13px; color: #bbb; }
-
-    #tools-page { display: none; }
-
-    img#banner {
-      width: 100%;
-      margin-top: 20px;
-      border-radius: 12px;
-      border: 2px solid #00d4ff;
+    /* Halaman Katalog */
+    .catalog-page {
       display: none;
+      padding: 30px 80px;
     }
 
-    .caption-box {
-      white-space: pre-wrap;
-      background: #1e2a38;
-      border: 2px solid #00d4ff;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      color: #0f0;
+    .header {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 30px;
+      gap: 15px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header h2 {
+      font-size: 28px;
+    }
+
+    .sort-select {
+      padding: 10px 15px;
+      border-radius: 30px;
+      border: 1px solid #ccc;
       font-size: 14px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .sort-select:focus {
+      border-color: #b8860b;
+      box-shadow: 0 0 8px rgba(184,134,11,0.3);
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      background: #d4af37;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #b8860b;
+    }
+
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .card-content h6 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .card-content p {
+      font-size: 7px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .price {
+      font-size: 10px;
+      font-weight: bold;
+      color: #b8860b;
+      margin-bottom: 9px;
+    }
+
+    .btn-buy {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-buy:hover {
+      background: linear-gradient(135deg, #b8860b, #8b6914);
+    }
+
+    /* Sembunyikan produk saat filter tidak cocok */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Order Page */
+    .order-page {
       display: none;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    @media (max-width: 1280px) {
+      .catalog {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 1024px) {
+      .catalog {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .catalog {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Halaman Login -->
-  <div id="login-page" class="card">
-    <h2>LOGIN</h2>
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" id="username" placeholder="Masukkan username">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="password" placeholder="Masukkan password">
-    </div>
-    <button class="btn" onclick="login()">Login</button>
-
-    <h3 style="margin:25px 0 10px; color:#ccc; font-size:14px;">Buat Akun</h3>
-    <div class="form-group">
-      <input type="text" id="newUser" placeholder="Username baru">
-    </div>
-    <div class="form-group">
-      <input type="password" id="newPass" placeholder="Password baru">
-    </div>
-    <button class="btn" onclick="buatAkun()">Buat Akun</button>
-
-    <div class="info">&copy;</div>
+  <!-- Halaman Awal -->
+  <div class="home" id="homePage">
+    <h1>welcome to my shop</h1>
+    <p>®Inuu Digital Marketplace</p>
+    <button class="btn" onclick="openCatalog('mewah')">Shopping</button>
   </div>
 
-  <!-- Halaman Tools -->
-  <div id="tools-page" class="tools">
-    <h2>Cuma Gabut</h2>
-    <div class="form-group">
-    <input type="text" id="targetNumber" placeholder="Masukkan nomor target (62xxxx)">
+  <!-- Halaman Katalog -->
+  <div class="catalog-page" id="catalogPage">
+    <div class="header">
+      <div class="header-left">
+        <h2 id="catalogTitle">Katalog Produk</h2>
+        <select id="sortSelect" class="sort-select">
+          <option value="default">Urutkan</option>
+          <option value="asc">Harga: Termurah → Termahal</option>
+          <option value="desc">Harga: Termahal → Termurah</option>
+        </select>
+        <button class="back-btn" onclick="goHome()">← Kembali</button>
+      </div>
     </div>
-    <button class="btn" onclick="startFc()">Ghost Delay</button>
-    <button class="btn" onclick="iphone()">Delay Iphone</button>
-    <button class="btn" onclick="ppk()">Delay Iphone</button>
 
-    <!-- Banner diganti gambar -->
-    <img id="banner" src="https://files.catbox.moe/n67yxg.jpeg" alt="banner">
+    <div class="catalog" id="catalog">
+      <!-- Contoh Produk -->
+      <div class="card mewah" data-price="2500000">
+        <img src="https://files.catbox.moe/hol6o6.jpg" alt="Produk 1">
+        <div class="card-content">
+          <h6>Jaket</h6>
+          <p>Jaket kulit asli dengan desain elegan.</p>
+          <div class="price">Rp 2.500.000</div>
+          <a class="btn-buy">Beli Sekarang</a>
+        </div>
+      </div>
+<div class="card mewah" data-price="8000000">
+<img src="https://files.catbox.moe/hol6o6.jpg" alt="Produk 2">
+<div class="card-content"><h6>Jam</h6><p>Jam tangan elegan untuk acara formal.</p><div class="price">Rp 8.000.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card mewah" data-price="15000000">
+<img src="https://files.catbox.moe/hol6o6.jpg" alt="Produk 3">
+<div class="card-content"><h6>Tas</h6><p>Tas eksklusif berbahan kulit asli.</p><div class="price">Rp 15.000.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card mewah" data-price="12000000">
+<img src="https://files.catbox.moe/hol6o6.jpg" alt="Produk 4">
+<div class="card-content"><h6>Kacamata</h6><p>Kacamata mewah dengan desain modern.</p><div class="price">Rp 12.000.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
 
-    <div class="caption-box" id="caption"></div>
+<!-- Produk Murah -->
+<div class="card murah" data-price="75000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 6">
+<div class="card-content"><h6>Kaos Santai</h6><p>Kaos simpel dengan bahan nyaman.</p><div class="price">Rp 75.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="50000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 7">
+<div class="card-content"><h6>Topi Casual</h6><p>Topi keren untuk aktivitas sehari-hari.</p><div class="price">Rp 50.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="120000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 8">
+<div class="card-content"><h6>Dompet Simpel</h6><p>Dompet praktis dengan bahan kulit sintetis.</p><div class="price">Rp 120.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="95000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 9">
+<div class="card-content"><h6>Sandal</h6><p>Sandal ringan cocok untuk sehari-hari.</p><div class="price">Rp 95.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="65000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 10">
+<div class="card-content"><h6>Kaos Polo</h6><p>Kaos polo nyaman dengan desain simpel.</p><div class="price">Rp 65.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="30000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 11">
+<div class="card-content"><h6>Gantungan</h6><p>Aksesoris kecil tapi keren.</p><div class="price">Rp 30.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="40000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 12">
+<div class="card-content"><h6>Botol Minum</h6><p>Botol praktis untuk aktivitas outdoor.</p><div class="price">Rp 40.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="80000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 13">
+<div class="card-content"><h6>Dompet Kecil</h6><p>Dompet mini untuk kartu dan uang receh.</p><div class="price">Rp 80.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="55000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 14">
+<div class="card-content"><h6>Sapu Tangan</h6><p>Kain sapu tangan halus.</p><div class="price">Rp 55.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+<div class="card murah" data-price="110000">
+<img src="https://via.placeholder.com/400x250" alt="Produk 15">
+<div class="card-content"><h6>Headset Murah</h6><p>Headset simple dengan kualitas suara oke.</p><div class="price">Rp 110.000</div><a class="btn-buy">Beli Sekarang</a></div>
+</div>
+</div>
+</div>
+      <!-- Tambahkan produk lain sesuai contoh sebelumnya -->
+    </div>
+  </div>
 
-    <div class="status">Status: Server Offline</div>
-    <div class="info">Gapunya Function Bug No Sender</div>
+  <!-- Halaman Order -->
+<!-- Halaman Order -->
+<!-- Halaman Order -->
+<div class="order-page" id="orderPage">
+  <h2>Form Order</h2>
+  <div id="orderDetails" style="margin:20px 0; font-size:16px;"></div>
+
+  <!-- Input Nama Pembeli -->
+  <input type="text" id="buyerName" placeholder="Nama Anda" style="padding:10px; width:80%; margin-bottom:15px; border-radius:5px; border:1px solid #ccc;">
+
+  <!-- Pilih Metode Pembayaran -->
+  <select id="paymentMethod" style="padding:10px; width:85%; margin-bottom:15px; border-radius:5px; border:1px solid #ccc;">
+    <option value="">Pilih Metode Pembayaran</option>
+    <option value="Transfer Bank">Transfer Bank</option>
+    <option value="OVO">OVO</option>
+    <option value="GoPay">GoPay</option>
+    <option value="COD">COD</option>
+  </select>
+
+  <!-- Input Jumlah Barang -->
+  <input type="number" id="quantity" min="1" value="1" style="padding:10px; width:30%; margin-bottom:15px; border-radius:5px; border:1px solid #ccc;" placeholder="Jumlah">
+
+  <!-- Tombol Konfirmasi -->
+  <button id="confirmBtn" class="btn-buy" style="margin-bottom:20px;">Konfirmasi & Kirim ke WhatsApp</button>
+
+  <!-- Kembali ke katalog -->
+  <br>
+  <button class="back-btn" onclick="backToCatalog()">← Kembali ke Katalog</button>
+</div>
+  </div>
+
+  <div class="footer">
+    <p>© 2025 ɪɴᴜᴜᴛᴢʏᴅᴇᴠ</p>
+    <p>ʙᴜʏ=ᴘᴀʜᴀᴍ</p>
+    <p>ᴀʟʟ ᴛʀx ɴᴏ ʀᴇғғ</p>
+    <p>© sᴍᴀʀᴛ ʙᴜʏᴇʀ</p>
   </div>
 
   <script>
-    let akun = JSON.parse(localStorage.getItem("akunList")) || [];
+  
+  
+  
+    const homePage = document.getElementById("homePage");
+    const catalogPage = document.getElementById("catalogPage");
+    const catalogTitle = document.getElementById("catalogTitle");
+    const sortSelect = document.getElementById("sortSelect");
+    const catalog = document.getElementById("catalog");
+    const cards = Array.from(document.querySelectorAll(".card"));
+    const orderPage = document.getElementById("orderPage");
 
-    function buatAkun() {
-      let u = document.getElementById("newUser").value;
-      let p = document.getElementById("newPass").value;
+    function openCatalog(type) {
+      homePage.style.display = "none";
+      catalogPage.style.display = "block";
+      catalogTitle.textContent = type === "mewah" ? "Produk Terkini" : "Katalog Barang Murah";
 
-      if (u === "" || p === "") {
-        alert("Username dan Password wajib diisi!");
-        return;
-      }
-
-      akun.push({ username: u, password: p });
-      localStorage.setItem("akunList", JSON.stringify(akun));
-      alert("Akun berhasil dibuat!");
-      document.getElementById("newUser").value = "";
-      document.getElementById("newPass").value = "";
+      cards.forEach(card => {
+        if (card.classList.contains(type)) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
     }
 
-    function login() {
-      let u = document.getElementById("username").value;
-      let p = document.getElementById("password").value;
-
-      let cari = akun.find(item => item.username === u && item.password === p);
-
-      if (cari) {
-        document.getElementById("login-page").style.display = "none";
-        document.getElementById("tools-page").style.display = "block";
-      } else {
-        alert("Username atau Password salah!");
-      }
+    function goHome() {
+      catalogPage.style.display = "none";
+      homePage.style.display = "flex";
+      sortSelect.value = "default";
+      cards.forEach(card => card.classList.remove("hidden"));
     }
 
-    function startFc() {
-  const q = document.getElementById("targetNumber").value.trim();
-  const caption = document.getElementById("caption");
-  const banner = document.getElementById("banner");
+    function backToCatalog() {
+      orderPage.style.display = "none";
+      catalogPage.style.display = "block";
+    }
 
-  if (!q.startsWith("62") || q.length < 10) {
-    alert("Masukkan nomor yang valid!");
+    // Tombol Beli Sekarang buka order page
+    document.querySelectorAll(".btn-buy").forEach(btn => {
+      btn.addEventListener("click", function(e){
+        e.preventDefault();
+        openOrder(this);
+      });
+    });
+
+    function openOrder(btn){
+  const card = btn.closest(".card");
+  const title = card.querySelector("h6").textContent;
+  const price = card.querySelector(".price").textContent;
+
+  catalogPage.style.display = "none";
+  orderPage.style.display = "block";
+
+  document.getElementById("orderDetails").innerHTML = `
+    <p>Produk: <strong>${title}</strong></p>
+    <p>Harga: <strong>${price}</strong></p>
+  `;
+
+  const phone = "+6283160556330"; // nomor WA
+  document.getElementById("confirmBtn").onclick = () => {
+  const buyerName = document.getElementById("buyerName").value.trim();
+  const paymentMethod = document.getElementById("paymentMethod").value;
+  const quantity = document.getElementById("quantity").value;
+
+  if(!buyerName || !paymentMethod || !quantity){
+    alert("Silakan isi semua data: Nama, Metode Pembayaran, dan Jumlah Barang");
     return;
   }
 
-  banner.style.display = "block";
-  caption.style.display = "block";
-
-  let i = 0;
-  const interval = setInterval(() => {
-    i += 10;
-    if (i >= 100) {
-      clearInterval(interval);
-      caption.textContent = `
-•━━━━━━━━━━━━━━━━━━━━•
-〣 Target 
-• ☇ ${q}
-〣 Developer 
-• ☇ @Inuutama
-〣 Progress
-• ☇ Failed send Ghost Delay
-•━━━━━━━━━━━━━━━━━━━━•`;
-
-      const chatId = `${q}@s.whatsapp.net`;
-      const apiList = [
-        `api`,
-        `api`
-      ];
-
-      apiList.forEach(url => {
-        fetch(url)
-          .then(res => res.text())
-          .then(data => {
-            console.log("✅ API sukses:", url);
-          })
-          .catch(err => {
-            console.error("❌ API gagal:", url);
-          });
-      });
-
-    } else {
-      caption.textContent = `
-•━━━━━━━━━━━━━━━━━━━━•
-〣 Target 
-• ☇ ${q}
-〣 Developer 
-• ☇ @Inuutama
-〣 Progress
-• ☇ Proses ${i}%
-•━━━━━━━━━━━━━━━━━━━━•`;
-    }
-  }, 600);
+  const message = encodeURIComponent(`
+Halo, saya ${buyerName} ingin memesan ${quantity} buah produk: ${title}, harga ${price}. Metode pembayaran: ${paymentMethod}`);
+  window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+};
 }
-function iphone() {
-  const q = document.getElementById("targetNumber").value.trim();
-  const caption = document.getElementById("caption");
-  const banner = document.getElementById("banner");
+    // Sorting
+    sortSelect.addEventListener("change", () => {
+      const option = sortSelect.value;
+      let visibleCards = cards.filter(card => !card.classList.contains("hidden"));
 
-  if (!q.startsWith("62") || q.length < 10) {
-    alert("Masukkan nomor yang valid!");
-    return;
-  }
+      if(option === "asc") visibleCards.sort((a,b) => a.dataset.price - b.dataset.price);
+      if(option === "desc") visibleCards.sort((a,b) => b.dataset.price - a.dataset.price);
 
-  banner.style.display = "block";
-  caption.style.display = "block";
-
-  let i = 0;
-  const interval = setInterval(() => {
-    i += 10;
-    if (i >= 100) {
-      clearInterval(interval);
-      caption.textContent = `
-•━━━━━━━━━━━━━━━━━━━━•
-〣 Target 
-• ☇ ${q}
-〣 Developer 
-• ☇ @Inuutama
-〣 Progress
-• ☇ Failed send Delay Iphone
-•━━━━━━━━━━━━━━━━━━━━•`;
-
-      const chatId = `${q}@s.whatsapp.net`;
-      const apiList = [
-        `api`,
-        `api`
-      ];
-
-      apiList.forEach(url => {
-        fetch(url)
-          .then(res => res.text())
-          .then(data => {
-            console.log("✅ API sukses:", url);
-          })
-          .catch(err => {
-            console.error("❌ API gagal:", url);
-          });
-      });
-
-    } else {
-      caption.textContent = `
-•━━━━━━━━━━━━━━━━━━━━•
-〣 Target 
-• ☇ ${q}
-〣 Developer 
-• ☇ @Inuutama
-〣 Progress
-• ☇ Proses ${i}%
-•━━━━━━━━━━━━━━━━━━━━•`;
-    }
-  }, 600);
-}
-function ppk() {
-  const q = document.getElementById("targetNumber").value.trim();
-  const caption = document.getElementById("caption");
-  const banner = document.getElementById("banner");
-
-  if (!q.startsWith("62") || q.length < 10) {
-    alert("Masukkan nomor yang valid!");
-    return;
-  }
-
-  banner.style.display = "block";
-  caption.style.display = "block";
-
-  let i = 0;
-  const interval = setInterval(() => {
-    i += 10;
-    if (i >= 100) {
-      clearInterval(interval);
-      caption.textContent = `
-•━━━━━━━━━━━━━━━━━━━━•
-〣 Target 
-• ☇ ${q}
-〣 Developer 
-• ☇ @Inuutama
-〣 Progress
-• ☇ Failed send Forclose
-•━━━━━━━━━━━━━━━━━━━━•`;
-
-      const chatId = `${q}@s.whatsapp.net`;
-      const apiList = [
-        `api`,
-        `api`
-      ];
-
-      apiList.forEach(url => {
-        fetch(url)
-          .then(res => res.text())
-          .then(data => {
-            console.log("✅ API sukses:", url);
-          })
-          .catch(err => {
-            console.error("❌ API gagal:", url);
-          });
-      });
-
-    } else {
-      caption.textContent = `
-•━━━━━━━━━━━━━━━━━━━━•
-〣 Target 
-• ☇ ${q}
-〣 Developer 
-• ☇ @Inuutama
-〣 Progress
-• ☇ Proses ${i}%
-•━━━━━━━━━━━━━━━━━━━━•`;
-    }
-  }, 600);
-}
+      visibleCards.forEach(card => catalog.appendChild(card));
+    });
   </script>
 
 </body>
