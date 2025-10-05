@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Payment Kyzo Store</title>
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css"> </head>
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<div class="top-controls">
+<button id="theme-toggle"><i class="fas fa-sun"></i></button>
+
+<div class="lang-selector-container">
+<button class="lang-selector-button" id="lang-selector-button">
+<span class="flag-icon" id="current-flag">🇮🇩</span>
+<span id="current-lang-text">ID</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="lang-dropdown" id="lang-dropdown">
+</div>
+</div>
+</div>
+
+<main id="app-container" style="opacity: 0;">
+<section id="welcome-page" class="page">
+<h1 data-lang-key="welcomeTitle">Website Payment</h1>
+<h2 id="typing-subtitle"></h2>
+<p data-lang-key="welcomeDescPro">Sistem gateway pembayaran aman dan modern.</p>
+<button id="start-btn" class="main-button" data-lang-key="startButton">Mulai</button>
+</section>
+
+<section id="payment-page" class="page hidden">
+<div class="payment-container">
+<h1 data-lang-key="paymentTitle">Payment Kyzo Store</h1>
+<p data-lang-key="paymentDesc">Pilih saluran aman yang diinginkan. Pindai aliran data di bawah atau gunakan koordinat transfer langsung.</p>
+<img id="qris-small" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=FallShopStorePayment" alt="QRIS" class="qris-small" title="Klik untuk memperbesar">
+<div class="collapsible">
+<button class="collapsible-header">
+<span data-lang-key="ewalletTitle">+ E-wallet</span>
+<svg class="chevron-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
+<div class="collapsible-content">
+<ul class="ewallet-list">
+<li class="ewallet-item">
+<div class="ewallet-info">
+<div class="ewallet-name">
+<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQqWRbhX7qmNyVC5gF6KjINc6xOr2g5HKBqZ524kTjt3qspu-XeNKsF5L9iPCW7vVjIJj3mXkEECUCq9yAG61UnRoR1iWVENbw3O4wg7A7bTQ" alt="DANA Logo" class="ewallet-logo"> DANA
+</div>
+<div class="ewallet-number">0856-8888-8888</div>
+</div>
+<button class="copy-btn" data-lang-key="copyButton"><i class="fas fa-copy"></i> Salin</button>
+</li>
+<li class="ewallet-item">
+<div class="ewallet-info">
+<div class="ewallet-name">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCjIy9nY7R7Ql-f8Jt15eQtcziDdNMlFk4Ig&sANd9GcQqWRbhX7qmNyVC5gF6KjINc6xOr2g5HKBqZ524kTjt3qspu-XeNKsFk4Ig&s" alt="GoPay Logo" class="ewallet-logo"> GoPay
+</div>
+<div class="ewallet-number">0821-8888-8888</div>
+</div>
+<button class="copy-btn" data-lang-key="copyButton"><i class="fas fa-copy"></i> Salin</button>
+</li>
+<li class="ewallet-item">
+<div class="ewallet-info">
+<div class="ewallet-name">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1MQiRP0chIIMxSuPpPOJ96XY3c9Ofvo2ebqs15m54qA&s" alt="OVO Logo" class="ewallet-logo"> OVO
+</div>
+<div class="ewallet-number">0856-8888-8888</div>
+</div>
+<button class="copy-btn" data-lang-key="copyButton"><i class="fas fa-copy"></i> Salin</button>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="action-buttons">
+<a href="https://t.me/kyzosan" target="_blank" rel="noopener noreferrer" class="secondary-button" data-lang-key="testimonialsButton">Testimoni Kyzo</a>
+<a href="https://t.me/kyzosan" target="_blank" rel="noopener noreferrer" class="secondary-button" data-lang-key="contactButton">Kontak Kyzo</a>
+<button id="return-btn" class="secondary-button" data-lang-key="returnButton">Kembali ke Awal</button>
+</div>
+</div>
+</section>
+</main>
+
+<div id="qris-modal" class="modal">
+<div class="modal-content">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=FallShopStorePayment" alt="QRIS Besar" class="qris-large">
+<div class="modal-buttons">
+<button class="main-button" id="download-qris-btn" data-lang-key="downloadButton"><i class="fas fa-download"></i> Unduh QRIS</button>
+<button class="secondary-button" id="close-modal-btn" data-lang-key="closeButton"><i class="fas fa-times"></i> Tutup</button>
+</div>
+</div>
+</div>
+
+<div id="toast"></div>
+
+<script src="script.js"></script> </body>
+</html>
