@@ -1,0 +1,622 @@
+/* --- CSS Variables for Theming --- */
+:root {
+--bg-color: #f0f2f5; /* Lighter, subtle background */
+--card-bg-color: #ffffff;
+--text-color: #2c3e50; /* Deeper primary text */
+--subtle-text-color: #7f8c8d; /* More muted secondary text */
+--primary-color: #6a5acd; /* Royal Purple */
+--primary-hover-color: #8a7acd; /* Lighter Royal Purple for hover */
+--border-color: #e0e6ec; /* Softer border */
+--shadow-color: rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+--highlight-bg: rgba(106, 90, 205, 0.15); /* Purple tint for highlight */
+--gradient-start: #6a5acd;
+--gradient-end: #8a7acd;
+}
+
+.dark-mode {
+--bg-color: #1a1a2e; /* Deep blue-purple */
+--card-bg-color: #24263b; /* Darker card background */
+--text-color: #e0e0e0; /* Lighter text for dark mode */
+--subtle-text-color: #b0b0b0;
+--primary-color: #7a6ad0; /* Slightly desaturated purple for dark mode */
+--primary-hover-color: #9a8de0;
+--border-color: #3b3d57;
+--shadow-color: rgba(0, 0, 0, 0.3);
+--highlight-bg: rgba(122, 106, 208, 0.25);
+--gradient-start: #7a6ad0;
+--gradient-end: #9a8de0;
+}
+
+/* --- Basic Reset & Body Styling --- */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+font-family: 'Inter', sans-serif;
+background-color: var(--bg-color);
+color: var(--text-color);
+transition: background-color 0.5s ease, color 0.5s ease;
+overflow-x: hidden; /* Prevent horizontal scroll on page transitions */
+}
+
+/* --- Loading Screen --- */
+#loader {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: var(--bg-color);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+transition: opacity 0.6s ease;
+}
+
+.spinner {
+border: 6px solid var(--border-color); /* Thicker border */
+border-top: 6px solid var(--primary-color);
+border-radius: 50%;
+width: 60px; /* Larger spinner */
+height: 60px;
+animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+100% { transform: rotate(360deg); }
+}
+
+/* --- Top Bar Controls --- */
+.top-controls {
+position: fixed;
+top: 25px;
+right: 25px;
+display: flex;
+align-items: center;
+gap: 15px;
+z-index: 100;
+}
+
+#theme-toggle {
+cursor: pointer;
+font-size: 28px; /* Larger icon */
+background: none;
+border: none;
+color: var(--text-color);
+transition: transform 0.3s ease, color 0.3s ease;
+outline: none;
+}
+#theme-toggle:hover {
+transform: scale(1.15);
+color: var(--primary-color);
+}
+
+/* --- Custom Language Selector --- */
+.lang-selector-container {
+position: relative;
+display: inline-block;
+}
+
+.lang-selector-button {
+font-family: 'Inter', sans-serif;
+padding: 10px 14px;
+border: 1px solid var(--border-color);
+border-radius: 10px;
+background-color: var(--card-bg-color);
+color: var(--text-color);
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 8px;
+font-weight: 500;
+transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.lang-selector-button:hover {
+border-color: var(--primary-color);
+box-shadow: 0 0 0 3px var(--highlight-bg);
+}
+
+.lang-selector-button .flag-icon {
+font-size: 20px;
+}
+
+.lang-dropdown {
+position: absolute;
+top: calc(100% + 10px); /* Position below the button */
+right: 0;
+background-color: var(--card-bg-color);
+border: 1px solid var(--border-color);
+border-radius: 10px;
+box-shadow: 0 8px 20px var(--shadow-color);
+min-width: 180px;
+max-height: 0; /* Hidden by default */
+overflow: hidden;
+opacity: 0;
+visibility: hidden;
+transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+z-index: 200;
+}
+
+.lang-dropdown.active {
+max-height: 300px; /* Adjust based on content */
+opacity: 1;
+visibility: visible;
+}
+
+.lang-dropdown-item {
+padding: 12px 18px;
+display: flex;
+align-items: center;
+gap: 10px;
+color: var(--text-color);
+cursor: pointer;
+transition: background-color 0.2s ease, color 0.2s ease;
+font-weight: 500;
+}
+
+.lang-dropdown-item:hover {
+background-color: var(--primary-color);
+color: #ffffff;
+}
+
+.lang-dropdown-item.selected {
+background-color: var(--highlight-bg);
+color: var(--primary-color);
+font-weight: 600;
+}
+
+/* --- Page Transitions & Layout --- */
+.page {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 3rem 1.5rem; /* More padding */
+position: absolute;
+width: 100%;
+top: 0;
+left: 0;
+transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+.page.hidden {
+opacity: 0;
+transform: translateY(20px) scale(0.98); /* Slide down and scale out */
+pointer-events: none;
+}
+
+/* --- Shared Elements --- */
+h1 {
+font-size: clamp(2.5rem, 5.5vw, 3.8rem); /* Larger and more flexible */
+font-weight: 800; /* Extra bold */
+margin-bottom: 0.75rem;
+color: var(--text-color);
+letter-spacing: -0.03em; /* Slightly tighter letter spacing */
+}
+
+h2 {
+font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+font-weight: 700;
+margin-bottom: 1.2rem; /* More space */
+color: var(--text-color);
+letter-spacing: -0.02em;
+}
+
+p {
+font-size: clamp(1rem, 2.5vw, 1.15rem); /* Slightly larger */
+max-width: 650px; /* Wider text block */
+line-height: 1.8; /* More comfortable line height */
+margin-bottom: 3rem; /* More space below paragraph */
+color: var(--subtle-text-color);
+}
+
+.main-button {
+font-family: 'Inter', sans-serif;
+font-size: 1.2rem; /* Larger font */
+font-weight: 700; /* Bolder */
+padding: 18px 45px; /* More generous padding */
+border: none;
+border-radius: 15px; /* More rounded */
+background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%); /* Gradient background */
+color: #ffffff;
+cursor: pointer;
+transition: all 0.35s ease; /* Smoother transition */
+box-shadow: 0 8px 20px var(--shadow-color); /* Deeper shadow */
+position: relative; /* For pseudo-element glow */
+overflow: hidden;
+}
+
+.main-button::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: rgba(255, 255, 255, 0.2);
+transform: skewX(-30deg);
+transition: all 0.7s ease;
+}
+
+.main-button:hover::before {
+left: 100%;
+}
+
+.main-button:hover {
+transform: translateY(-5px); /* Lift more on hover */
+box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+.dark-mode .main-button:hover {
+box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* --- Welcome Page: Typing Effect --- */
+#welcome-page h2 {
+min-height: 48px; /* Reserve more space for larger font */
+}
+.typing-cursor {
+display: inline-block;
+width: 4px; /* Thicker cursor */
+height: 2.2rem; /* Taller cursor */
+background-color: var(--primary-color);
+animation: blink 0.8s infinite;
+vertical-align: middle; /* Align cursor with text */
+}
+@keyframes blink {
+50% { opacity: 0; }
+}
+
+/* --- Payment Page --- */
+.payment-container {
+width: 100%;
+max-width: 650px; /* Wider container */
+background-color: var(--card-bg-color);
+border-radius: 20px; /* More rounded card */
+padding: 40px; /* More internal padding */
+box-shadow: 0 10px 30px var(--shadow-color); /* Card shadow */
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 1.8rem; /* Increased spacing */
+}
+@media (max-width: 768px) {
+.payment-container {
+padding: 30px;
+margin-top: 80px; /* Adjust for mobile view to prevent top-controls overlap */
+}
+}
+@media (max-width: 480px) {
+.payment-container {
+padding: 20px;
+}
+}
+
+
+.qris-small {
+width: 180px; /* Larger QRIS */
+height: 180px;
+cursor: pointer;
+border-radius: 20px; /* More rounded */
+border: 6px solid var(--card-bg-color); /* Thicker border */
+padding: 0;
+background-color: #fff;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+.qris-small:hover {
+transform: scale(1.1); /* Slightly larger scale */
+box-shadow: 0 10px 30px var(--shadow-color); /* Stronger hover shadow */
+}
+
+.action-buttons {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 18px; /* More space between buttons */
+width: 100%;
+margin-top: 1rem; /* Space from above elements */
+}
+
+.secondary-button, .action-buttons a {
+font-family: 'Inter', sans-serif;
+font-size: 1rem; /* Slightly larger font */
+font-weight: 600;
+padding: 14px 25px; /* More padding */
+border-radius: 12px; /* More rounded */
+border: 1px solid var(--border-color);
+background-color: var(--bg-color); /* Use background color for secondary */
+color: var(--text-color);
+cursor: pointer;
+transition: all 0.3s ease;
+flex-grow: 1;
+text-decoration: none;
+text-align: center;
+max-width: 220px; /* Limit width */
+box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* subtle shadow */
+}
+
+.secondary-button:hover, .action-buttons a:hover {
+background-color: var(--primary-color); /* Primary color background on hover */
+border-color: var(--primary-color);
+color: #ffffff; /* White text on hover */
+transform: translateY(-3px);
+box-shadow: 0 6px 15px var(--highlight-bg);
+}
+
+/* --- Collapsible E-Wallet --- */
+.collapsible {
+width: 100%;
+background-color: var(--bg-color); /* Use bg-color for header background */
+border: 1px solid var(--border-color);
+border-radius: 15px; /* More rounded */
+overflow: hidden;
+transition: box-shadow 0.3s ease;
+}
+.collapsible:hover {
+box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.collapsible-header {
+width: 100%;
+padding: 20px 25px; /* More padding */
+background-color: var(--card-bg-color); /* Card background for header */
+border: none;
+font-family: 'Inter', sans-serif;
+font-size: 1.15rem; /* Slightly larger font */
+font-weight: 700;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+color: var(--text-color);
+border-bottom: 1px solid var(--border-color); /* Separator */
+}
+.collapsible-header:hover {
+background-color: var(--bg-color); /* Subtle hover effect */
+}
+
+.collapsible-header .chevron-icon {
+transition: transform 0.4s ease;
+stroke: var(--primary-color); /* Color chevron icon */
+}
+
+.collapsible-header.active .chevron-icon {
+transform: rotate(180deg);
+}
+
+.collapsible-content {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.5s ease-in-out; /* Slower transition for smoothness */
+background-color: var(--card-bg-color); /* Card background for content */
+}
+
+.ewallet-list {
+list-style: none;
+padding: 10px 15px; /* Adjust padding */
+margin: 0;
+}
+
+.ewallet-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 18px 15px; /* More padding */
+border-bottom: 1px solid var(--border-color);
+transition: background-color 0.2s ease;
+border-radius: 10px; /* Softer corners */
+}
+.ewallet-item:last-child { border-bottom: none; }
+.ewallet-item:hover { background-color: var(--bg-color); }
+
+.ewallet-info { text-align: left; }
+.ewallet-name { font-weight: 700; font-size: 1.05rem; color: var(--text-color); }
+.ewallet-number {
+font-size: 0.95rem; /* Slightly larger */
+color: var(--subtle-text-color);
+padding: 3px 6px;
+border-radius: 6px;
+transition: background-color 0.3s ease;
+user-select: text; /* Allow text selection */
+}
+.ewallet-number.highlight {
+background-color: var(--highlight-bg);
+font-weight: 500;
+}
+
+.copy-btn {
+font-family: 'Inter', sans-serif;
+font-size: 0.9rem; /* Slightly larger */
+padding: 10px 18px; /* More padding */
+border-radius: 10px; /* More rounded */
+border: 1px solid var(--primary-color);
+background-color: transparent;
+color: var(--primary-color);
+cursor: pointer;
+font-weight: 600;
+transition: all 0.25s ease;
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+.copy-btn:hover {
+background-color: var(--primary-color);
+color: #fff;
+transform: translateY(-2px);
+box-shadow: 0 4px 10px var(--highlight-bg);
+}
+
+/* --- Modal QRIS --- */
+.modal {
+position: fixed;
+z-index: 2000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0,0,0,0.8); /* Darker overlay */
+display: flex;
+justify-content: center;
+align-items: center;
+opacity: 0;
+visibility: hidden;
+transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.modal.active {
+opacity: 1;
+visibility: visible;
+}
+
+.modal-content {
+background-color: var(--card-bg-color);
+padding: 40px; /* More padding */
+border-radius: 25px; /* More rounded */
+text-align: center;
+max-width: 90%;
+width: 450px; /* Slightly wider */
+box-shadow: 0 15px 40px rgba(0,0,0,0.3); /* Deeper shadow */
+transform: scale(0.9); /* Start smaller */
+transition: transform 0.4s ease;
+}
+.modal.active .modal-content {
+transform: scale(1);
+}
+
+.qris-large {
+width: 100%;
+max-width: 350px; /* Larger QRIS in modal */
+height: auto;
+border-radius: 20px;
+margin-bottom: 30px; /* More space */
+background-color: #fff;
+padding: 15px; /* Padding inside QRIS image */
+border: 1px solid var(--border-color);
+}
+
+.modal-buttons {
+display: flex;
+gap: 20px; /* More space */
+justify-content: center;
+flex-wrap: wrap;
+}
+
+/* --- Toast Notification --- */
+#toast {
+position: fixed;
+bottom: -100px;
+left: 50%;
+transform: translateX(-50%);
+background-color: #34495e; /* Darker, more premium color */
+color: #fff;
+padding: 16px 32px; /* More generous padding */
+border-radius: 12px; /* More rounded */
+z-index: 3000;
+font-weight: 600;
+box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Springy effect */
+text-align: center;
+min-width: 250px;
+}
+
+#toast.show {
+bottom: 30px;
+}
+
+.dark-mode #toast {
+background-color: #e0e0e0;
+color: var(--text-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+.top-controls {
+top: 15px;
+right: 15px;
+gap: 10px;
+}
+#theme-toggle {
+font-size: 22px;
+}
+.lang-selector-button {
+padding: 6px 10px;
+font-size: 0.9rem;
+}
+.lang-selector-button .flag-icon {
+font-size: 16px;
+}
+.lang-dropdown-item {
+padding: 8px 12px;
+font-size: 0.9rem;
+}
+h1 {
+font-size: clamp(2rem, 8vw, 3rem);
+}
+h2 {
+font-size: clamp(1.4rem, 6vw, 2rem);
+}
+p {
+font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+margin-bottom: 2rem;
+}
+.main-button {
+padding: 14px 30px;
+font-size: 1.05rem;
+}
+.payment-container {
+padding: 25px;
+gap: 1rem;
+}
+.qris-small {
+width: 140px;
+height: 140px;
+border-radius: 15px;
+}
+.collapsible-header {
+padding: 15px 20px;
+font-size: 1.05rem;
+}
+.ewallet-item {
+padding: 15px 10px;
+}
+.copy-btn {
+padding: 7px 12px;
+font-size: 0.8rem;
+}
+.modal-content {
+padding: 25px;
+}
+.qris-large {
+max-width: 250px;
+margin-bottom: 20px;
+}
+.modal-buttons {
+flex-direction: column;
+gap: 10px;
+}
+.secondary-button, .action-buttons a {
+font-size: 0.9rem;
+padding: 10px 18px;
+}
+}
+
+.ewallet-logo {
+width: 24px; /* Sesuaikan ukuran sesuai kebutuhan Anda */
+height: 24px;
+margin-right: 8px; /* Jarak antara logo dan nama e-wallet */
+vertical-align: middle; /* Meratakan logo secara vertikal dengan teks */
+border-radius: 4px; /* Opsional: sedikit sudut membulat untuk logo */
+}
